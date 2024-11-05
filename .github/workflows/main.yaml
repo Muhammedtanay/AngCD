@@ -17,9 +17,15 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build Angular app to prod
+      - name: Install dependencies
+        run: npm install
         working-directory: AngCD
-        run: npm install && npm run build:prod
+
+      - name: Build Angular app to prod
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider  # Add this line
+        working-directory: AngCD
+        run: npm run build:prod
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
